@@ -7,7 +7,7 @@ class EncodeDistance
 {
 public:
     EncodeDistance::EncodeDistance(Encoder*);
-    ~EncodeDistance(); 
+    ~EncodeDistance();
     double convertTickToDist(double distance);
     float convertDistToTick(float distance);
     void Start();

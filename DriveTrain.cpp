@@ -11,19 +11,18 @@ DriveTrain::DriveTrain(uint8_t modFL,uint32_t chanFL,
                        new Talon(modFR,chanFR),
                        new Talon(modRR,chanRR))
 {
-
 }
 
 DriveTrain::~DriveTrain()
 {
 }
 
-void DriveTrain::go()
+void DriveTrain::forward()
 {
     //TODO  note: the following code needs ports.h or whatever
     /*
     SpeedController::Set(1,modFL);
-    SpeedController::Set(1,modRL); 
+    SpeedController::Set(1,modRL);
     SpeedController::Set(1,modFR);
     SpeedController::Set(1,modRL);
     RobotDrive::RobotDrive(SpeedController &modFL, SpeedController &modRL, SpeedController &modFR, SpeedController &modRR);
@@ -48,7 +47,7 @@ void DriveTrain::autoDrive(float distance)
     //parameters
     bool atDist = false;
     float enDist = encode->GetDistance();    //Set all motors to 1
-    DriveTrain::go();
+    DriveTrain::forward();
     encode->Start();
 
     // within in a while loop,
@@ -92,4 +91,7 @@ void teleTurn(/*some variable*/)
 {
     // TODO
 }
+
+
+
 

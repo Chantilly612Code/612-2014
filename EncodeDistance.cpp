@@ -3,7 +3,7 @@
 
 EncodeDistance::EncodeDistance(Encoder* obj)
 {
-	myEncoder = obj;
+    myEncoder = obj;
 }
 
 EncodeDistance::~EncodeDistance()
@@ -35,4 +35,7 @@ double GetDistance()
     /* will determine the conversion through testing and taking measurements */
     return 0;
 }
+
+
+
 
