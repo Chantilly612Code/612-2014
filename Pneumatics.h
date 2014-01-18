@@ -5,14 +5,25 @@
 #include "DriveTrain.h"
 #include <DigitalInput.h>
 #include <Relay.h>
+#include <Timer.h>
+#include <DoubleSolenoid.h>
+#include <vector>
 
-class pneumatics
-{
+class pneumatics{
+
     public:
-        void definePnuematics();
+        void definePneumaticsObjects();
         void checkPressure();
+        void setVectorValues(double timerValues, DoubleSolenoid* startSolenoid, DoubleSolenoid::Value);
+        void updateSolenoid();
     private:
         DigitalInput* switchObject;
         Relay* compressor;
+        Timer* solenoidTimer;
+        std::vector <double> time;
+        std::vector <Timer*> timerObject;
+        std::vector <DoubleSolenoid*> solenoid;
+        DoubleSolenoid* testSolenoid;
+
 };
 #endif // PNEUMATICS_H
