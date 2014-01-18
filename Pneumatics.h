@@ -7,19 +7,23 @@
 #include <Relay.h>
 #include <Timer.h>
 #include <DoubleSolenoid.h>
+#include <vector>
 
-class pneumatics
-{
+using namespace std;
+
+class pneumatics{
+
     public:
-        void definePnuematicsObjects();
+        void definePneumaticsObjects();
         void checkPressure();
         void setVectorValues(double timerValues, DoubleSolenoid* startSolenoid, DoubleSolenoid::Value);
         void updateSolenoid();
     private:
         DigitalInput* switchObject;
         Relay* compressor;
+        Timer* solenoidTimer;
         vector <double> time;
-        vector <Timer*> timerObject
+        vector <Timer*> timerObject;
         vector <DoubleSolenoid*> solenoid;
         DoubleSolenoid* testSolenoid;
 
