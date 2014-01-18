@@ -9,8 +9,6 @@
 #include <DoubleSolenoid.h>
 #include <vector>
 
-using namespace std;
-
 class pneumatics{
 
     public:
@@ -22,9 +20,9 @@ class pneumatics{
         DigitalInput* switchObject;
         Relay* compressor;
         Timer* solenoidTimer;
-        vector <double> time;
-        vector <Timer*> timerObject;
-        vector <DoubleSolenoid*> solenoid;
+        std::vector <double> time;
+        std::vector <Timer*> timerObject;
+        std::vector <DoubleSolenoid*> solenoid;
         DoubleSolenoid* testSolenoid;
 
 };

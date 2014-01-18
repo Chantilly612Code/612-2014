@@ -8,8 +8,6 @@
 #include <vector>
 /*#include <EasterEgg.h>*/
 
-using namespace std;
-
 pneumatics pneumaticsObj;
 
 void pneumaticsObj.definePneumaticsObjects(){
