@@ -15,8 +15,8 @@ main_robot::~main_robot()
 
 void main_robot::RobotInit()
 {
-    driverJoy = new Joystick(1);
-    gunnerJoy = new Joystick(2);
+    driverJoy = new Joystick(DRIVER_JOY_PORT);
+    gunnerJoy = new Joystick(GUNNER_JOY_PORT);
     //pnum = new Pneumatics(1,8,1,8); // TODO Placeholder for the ports
     //shift = new Shifter(1,7,8);
     //shift->setHigh();
