@@ -6,14 +6,23 @@
 class EncodeDistance
 {
 public:
-    EncodeDistance::EncodeDistance(Encoder*);
-    ~EncodeDistance(); 
-    double convertTickToDist(double distance);
-    float convertDistToTick(float distance);
-    void Start();
-    double GetDistance();
+    EncodeDistance::EncodeDistance(uint8_t modLA, uint32_t chanLA,
+                                   uint8_t modLB, uint32_t chanLB,
+                                   uint8_t modRA, uint32_t chanRA,
+                                   uint8_t modRB, uint32_t chanRB);
+    ~EncodeDistance();
+    double getLDistance();
+    double getRDistance();
+    double getAvgDistance();
+    double convertTickToDist(double pulse);
+    double convertDistToTick(double distance);
+    Encoder* EncoderL;
+    Encoder* EncoderR;
 private:
-    Encoder* myEncoder;
+    static const double dist = 1.0;
 };
 
 #endif // ENCODEDISTANCE_H
+
+
+

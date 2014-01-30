@@ -1,38 +1,49 @@
 #include "main.h"
-#include "EncodeDistance.h"
+#include "ports.h"
 
-EncodeDistance::EncodeDistance(Encoder* obj)
+EncodeDistance::EncodeDistance(uint8_t modLA, uint32_t chanLA,
+                               uint8_t modLB, uint32_t chanLB,
+                               uint8_t modRA, uint32_t chanRA,
+                               uint8_t modRB, uint32_t chanRB)
 {
-	myEncoder = obj;
+    EncoderL = new Encoder(modLA, chanLA,
+                           modLB, chanLB);
+    EncoderR = new Encoder(modRA, chanRA,
+                           modRB, chanRB);
+    EncoderL->SetDistancePerPulse(dist);
+    EncoderR->SetDistancePerPulse(dist);
 }
 
 EncodeDistance::~EncodeDistance()
 {
+    delete EncoderL;
+    delete EncoderR;
 }
 
-double convertTickToDist(double distance)
+double EncodeDistance::getLDistance()
 {
-    //TODO
-    /* will determine the conversion through testing and taking measurements */
-    return 0;
+    return EncoderL->GetDistance();
 }
 
-float convertDistToTick(float distance)
+double EncodeDistance::getRDistance()
+{
+    return EncoderR->GetDistance();
+}
+
+double EncodeDistance::getAvgDistance()
+{
+    return (getLDistance() + getRDistance()) / 2;
+}
+double EncodeDistance::convertTickToDist(double pulse)
+{
+    return (pulse/EncoderR->GetRate());
+}
+
+double EncodeDistance::convertDistToTick(double distance)
 {
     // TODO
-    /* will determine the conversion through testing and taking measurements */
-    return 0;
+    return (EncoderR->GetRate());
 }
-void Start()
-{
-    // TODO
-    /* will determine the conversion through testing and taking measurements */
-    
-}
-double GetDistance()
-{
-    // TODO
-    /* will determine the conversion through testing and taking measurements */
-    return 0;
-}
+
+
 
