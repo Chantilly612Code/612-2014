@@ -2,9 +2,10 @@
 #include <Talon.h>
 double DriveTrain::PI = 3.141592653;
 double DriveTrain::CIRCUMROBOT = 2 * PI * ROBOTRAD;
-bool DriveTrain::isMoving = false;
-bool DriveTrain::leftHasDriven = false;
-bool DriveTrain::rightHasDriven = false;
+bool DriveTrain::isMovingL = false;
+bool DriveTrain::isMovingR = false;
+bool DriveTrain::isTurningL = false;
+bool DriveTrain::isTurningR = false;
 
 DriveTrain::DriveTrain(uint8_t modFL,uint32_t chanFL,
                         uint8_t modRL,uint32_t chanRL,
@@ -19,7 +20,7 @@ DriveTrain::DriveTrain(uint8_t modFL,uint32_t chanFL,
                                 ENCODER_LMODULE_B, ENCODER_LCHANNEL_B,
                                 ENCODER_RMODULE_A, ENCODER_RCHANNEL_A,
                                 ENCODER_RMODULE_B, ENCODER_RCHANNEL_B);
-} 
+}
 
 DriveTrain::~DriveTrain()
 {
@@ -28,71 +29,28 @@ DriveTrain::~DriveTrain()
 
 void DriveTrain::autoDrive(double distance)
 {
-    if (isMoving = false)
-    {
-        TankDrive(SPEED, SPEED);
-        isMoving = true;
-    }
-    if  ((encode->getRDistance() >= distance) &&
-         (encode->getLDistance() >= distance))
-    {
-        encode->EncoderL->Stop();
-        encode->EncoderL->Reset();
-        encode->EncoderR->Stop();
-        encode->EncoderR->Reset();
-        leftHasDriven = true;
-        rightHasDriven = true;
-        TankDrive(0.0f,0.0f);
-    }
-    else if (encode->getLDistance() >= distance)
-    {
-        encode->EncoderL->Stop();
-        encode->EncoderL->Reset();
-        leftHasDriven = true;
-        TankDrive(0.0f, SPEED);
-    }
-    else if (encode->getRDistance() >= distance)
-    {
-        encode->EncoderR->Stop();
-        encode->EncoderR->Reset();
-        rightHasDriven = true;
-        TankDrive(SPEED,0.0f);
-    }
+    NeededDist = distance;
+    TankDrive(SPEED, SPEED);
+    isMovingL = true;
+    isMovingR = true;
+    encode->EncoderL->Start();
+    encode->EncoderR->Start();
 }
 void DriveTrain::autoTurn(double degrees)
 {
     double degrees2Radians = degrees * (PI/180);
     double arcLength = CIRCUMROBOT * (degrees2Radians/(2 * PI));  // checks the length of the arc in feet
-    if (degrees == 0)
-    {
-        encode->EncoderL->Stop();
-        encode->EncoderR->Stop();
-        TankDrive(0.0f,0.0f);
-    }
-    if (degrees < 0)
-    {
-        encode->EncoderL->Start();
-        encode->EncoderR->Start();
-        TankDrive(SPEED, -SPEED); 
-        if ((encode->getRDistance() >= arcLength))
-        {     
-            encode->EncoderL->Stop();
-            encode->EncoderR->Stop();
-            TankDrive(0.0f,0.0f);
-        }
-    }
-    else if (degrees > 0)
-    {    
-        encode->EncoderL->Start();
-        encode->EncoderR->Start();
+    NeededDist = arcLength;
+    if (degrees > 0){
         TankDrive(-SPEED, SPEED);
-        if ((encode->getLDistance() >= arcLength))
-        {      
-            encode->EncoderL->Stop();
-            encode->EncoderR->Stop();
-            TankDrive(0.0f,0.0f);
-        }
+        isTurningL = true;
     }
+    if (degrees < 0){
+        TankDrive(SPEED, -SPEED);
+        isTurningR = true;
+    }
+    encode->EncoderL->Start();
+    encode->EncoderR->Start();
 }
 
 void DriveTrain::teleTurn(Dir direction, double power)
@@ -109,13 +67,54 @@ void DriveTrain::teleTurn(Dir direction, double power)
 
 void DriveTrain::update()
 {
-    if (leftHasDriven == false && rightHasDriven == false)
+    float speedL;
+    float speedR;
+    if (isMovingL || isMovingR)
     {
-        autoDrive(NeededDist);
+        speedL = SPEED;
+        if (encode->getLDistance() >= NeededDist)
+        {
+            encode->EncoderL->Stop();
+            encode->EncoderL->Reset();
+            isMovingL = false;
+            speedL = 0.0f;
+        }
+        speedR = SPEED;
+        if (encode->getRDistance() >= NeededDist)
+        {
+            encode->EncoderR->Stop();
+            encode->EncoderR->Reset();
+            isMovingR = false;
+            speedR = 0.0f;
+        }
+        TankDrive(speedL, speedR);
     }
-    else 
+    if (isTurningL || isTurningR)
     {
-        autoTurn(NeededDegrees);
+        speedL = SPEED;
+        if (encode->getLDistance() >= NeededDist)
+        {
+            encode->EncoderL->Stop();
+            encode->EncoderL->Reset();
+            isTurningL = false;
+            speedL = 0.0f;
+        }
+        speedR == SPEED;
+        if (encode->getRDistance() >= -NeededDist)
+        {
+            encode->EncoderR->Stop();
+            encode->EncoderR->Reset();
+            isTurningR = false;
+            speedR = 0.0f;
+        }
+        if (isTurningL)
+        {
+            TankDrive(-speedL, speedR);
+        }
+        if (isTurningR)
+        {
+            TankDrive(speedL, -speedR);
+        }
     }
 }
 
