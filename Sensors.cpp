@@ -68,7 +68,7 @@ void Sensors::runSensors(int sense)
         {
             if ((double)ultrasonic->GetVoltage() != prevVal)
             {
-                std::printf("UltraSonic Voltage: %f\nUltraSonic Value: %f\n\n", (double)ultrasonic->GetVoltage(), (double)ultrasonic->GetVoltage()/(0.0098));
+                std::printf("UltraSonic Voltage: %f\nUltraSonic Distance: %f\n\n", (double)ultrasonic->GetVoltage(), (double)ultrasonic->GetVoltage()/(0.0098));
             }
         }
         prevVal = (double)ultrasonic->GetValue();
@@ -98,9 +98,10 @@ void Sensors::runSensors(int sense)
         }
         if (count % 50 == 0)
         {
+            double distance = (double)(infared->GetVoltage()*18.777777777777777); // about 1 cm off
             if ((double)infared->GetVoltage() != prevVal)
             {
-                std::printf("Infared Voltage: %f\nInfared Value: %f\n\n", (double)infared->GetVoltage(), (double)infared->GetValue());
+                std::printf("Infared Voltage: %f\nInfared Value: %f\nInfared Distance (cm): %f\n\n", (double)infared->GetVoltage(), (double)infared->GetValue(), distance);
             }
         }
         prevVal = (double)infared->GetValue();
