@@ -29,11 +29,7 @@ const static uint8_t SHIFT_LOW  = BUTTON_LB;
 const static uint8_t SHIFT_HIGH = BUTTON_RB;
 
 //Clamping
-const static uint8_t CLAMP_UP   = BUTTON_A;
-const static uint8_t CLAMP_DOWN = BUTTON_B;
-
-//Rollers
-const static uint8_t ROLLERS = BUTTON_X;
+const static uint8_t PICKUP = BUTTON_B;
 
 //Trigger State
 enum trigStates {TRIG_L, TRIG_R, TRIG_NONE};

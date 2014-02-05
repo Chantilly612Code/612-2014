@@ -7,6 +7,7 @@
 #include "controls.h"
 #include "Pneumatics.h"
 #include "SmoothJoystick.h"
+#include "AnalogPotentiometer.h"
 
 class Shooter
 {
@@ -21,6 +22,7 @@ public:
     void pitchUp();
     void pitchDown();
     void pitchStop();
+    void pitchAngle(double angle);
     void pull();//Wheel pulls ball
     void pullStop();
     void autoClamp();
@@ -31,11 +33,12 @@ public:
     DoubleSolenoid* clamper;
     Pneumatics* pneumatics;
     SmoothJoystick* shooterJoy;
+    AnalogPotentiometer* pot;
     //Blah* puncher;
     const static float SPEED_AXISPOWER;
     const static float SPEED_ATTRACTOR = 0.5f;
     const static double TIME = 0.1;
-
+    double currentAng;
 
     static void buttonHelper(void* objPtr, uint32_t button);
 

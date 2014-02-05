@@ -8,7 +8,8 @@ const float Shooter::SPEED_AXISPOWER = 0.5f;
 Shooter::Shooter(uint8_t axisMod,
                  uint8_t attractMod, uint32_t attractChan,
                  uint8_t clampMod, uint32_t clampFChan, uint32_t clampRChan,
-                 uint32_t sjPort)
+                 uint32_t sjPort,
+                 int potSlot, int potChan, double potScale, double potOffset)
 {
     axis = new CANJaguar(axisMod);
     attractor = new Talon(attractMod, attractChan);
@@ -17,6 +18,7 @@ Shooter::Shooter(uint8_t axisMod,
     robot -> gunnerJoy -> addJoyFunctions(&buttonHelper,(void*)this,CLAMP_UP);
     robot -> gunnerJoy -> addJoyFunctions(&buttonHelper,(void*)this,CLAMP_DOWN);
     robot -> update -> addFunctions(&updateHelper, (void*)this);
+    pot = new AnalogPotentiometer(potSlot, potChan, potScale, potOffset);
     printf("Shooters have been updated\n");
 }
 
@@ -40,6 +42,24 @@ void Shooter::pitchDown()
 void Shooter::pitchStop()
 {
     axis->Set(0);
+}
+
+void Shooter::pitchAngle(double angle)
+{
+	if (angle > 0)
+	{
+		pitchUp();
+		if (currentAng >= angle){
+			pitchStop();
+		}
+	}
+	if (angle < 0)
+	{
+		pitchDown();
+		if (currentAng <= angle){
+			pitchStop();
+		}
+	}
 }
 
 void Shooter::pull()
@@ -95,6 +115,7 @@ void Shooter::buttonHelper(void* objPtr, uint32_t button){
 
 void Shooter::update()
 {
+	currentAng = pot -> Get();
     if(shooterJoy -> GetTriggerState() == TRIG_L)
     {
         pitchUp();
@@ -108,13 +129,15 @@ void Shooter::update()
         pitchStop();
     }
 
-    if(shooterJoy -> GetSmoothButton(ROLLERS))
+    if(shooterJoy -> GetSmoothButton(PICKUP))
     {
-        pull();
+    	clampDown();
+    	pitchAngle(-23);
     }
     else
     {
-        pullStop();
+    	clampUp();
+    	pitchAngle(65432);
     }
 }
 
