@@ -5,7 +5,7 @@
 
 #include <SpeedController.h>
 #include <Talon.h>
-#include <CANJaguar.h>
+//#include <CANJaguar.h>
 #include <Relay.h>
 
 #include "ports.h"
@@ -57,6 +57,6 @@ private:
     
     Talon* grabber; //Talon 3
     
-    CANJaguar* tilt; //CANJag 1
+    //CANJaguar* tilt; //CANJag 1
 };
 #endif

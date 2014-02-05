@@ -22,7 +22,7 @@ void Pneumatics::runPneumatics(int pnum)
         toggleSolenoid(shift1);
         if (prevPnum != pnum)
         {
-            std::printf("Shift Solenoid");
+            std::printf("Shift Solenoid\n");
         }
     }
     else if (pnum == 1)
@@ -35,10 +35,15 @@ void Pneumatics::runPneumatics(int pnum)
     }
     else if (pnum == 2)
     {
-        if (robot->sense->pnumSwitch->Get() != prevVal)
+        static int count = 0;
+        if (count % 50 == 0)
         {
-            std::printf("DigitalInput: %ld\n", robot->sense->pnumSwitch->Get()); 
+            if (robot->sense->pnumSwitch->Get() != prevVal)
+            {
+                std::printf("DigitalInput: %ld\n", robot->sense->pnumSwitch->Get()); 
+            }
         }
+        count++;
     }
     else if(pnum >= 3)
     {
@@ -74,7 +79,7 @@ void Pneumatics::toggleSolenoid(DoubleSolenoid* sol)
         sol->Set(DoubleSolenoid::kOff);
         if (solToggled != DoubleSolenoid::kOff)
         {
-            std::printf("Solenoid Off");
+            std::printf("Solenoid Off\n");
             solToggled = DoubleSolenoid::kOff;
         }
     }
