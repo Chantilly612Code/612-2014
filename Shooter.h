@@ -22,7 +22,7 @@ public:
     void pitchUp();
     void pitchDown();
     void pitchStop();
-    void pitchAngle(int32_t angle);
+    void pitchAngle(double newPosition);
     void pull();//Wheel pulls ball
     void pullStop();
     void autoClamp();
@@ -41,9 +41,11 @@ public:
     bool isPickingUp;
     bool isPitchingUp;
     bool isPitchingDown;
-    int32_t currentAng;
-    int32_t originAng;
-    int32_t destinationAng;
+    double currentPos;
+    double destinationPos;
+    double originPos;
+    static const double SHOOTING_POSITION = 45;
+    static const double PICKUP_POSITION = 135;
 
     static void buttonHelper(void* objPtr, uint32_t button);
 
