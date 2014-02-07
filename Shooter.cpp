@@ -140,16 +140,13 @@ void Shooter::update()
         {
             isPickingUp = true;
             pitchAngle(PICKUP_POSITION);
-        }
-        if (!isPitchingUp){
             clampDown();
-        }
     }
     else
     {
         isPickingUp = false;
     	pitchAngle(SHOOTING_POSITION);
-    	if (!isPitchingDown){
+    	if (!isPitchingUp){
     	    clampUp();
     	}
     }

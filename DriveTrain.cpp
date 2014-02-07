@@ -24,8 +24,8 @@ DriveTrain::DriveTrain(uint8_t modFL,uint32_t chanFL,
                                 ENCODER_LMODULE_B, ENCODER_LCHANNEL_B,
                                 ENCODER_RMODULE_A, ENCODER_RCHANNEL_A,
                                 ENCODER_RMODULE_B, ENCODER_RCHANNEL_B);
+
     robot -> update -> addFunctions(&updateHelper, (void*) this);
-    printf("Drivetrain has been updated\n");
 }
 
 DriveTrain::~DriveTrain()
@@ -118,7 +118,7 @@ void DriveTrain::update()
         isTurningL = false;
         TankDrive(-speedL, speedR);
     }
-    if (isTurningR)  // NeededDist is negative
+    else
     {
         speedL = SPEED;
         if (encode->getLDistance() >= -NeededDist)
