@@ -5,7 +5,7 @@
 
 #include <SpeedController.h>
 #include <Talon.h>
-//#include <CANJaguar.h>
+#include <CANJaguar.h>
 #include <Relay.h>
 
 #include "ports.h"
@@ -49,6 +49,7 @@ private:
     float right;
     void drive(bool print);
     void drive2(bool print);
+    //const float THRESHHOLD = 0.1;
 
     Talon* FR; //Talon 7
     Talon* FL; //Talon 1
@@ -57,6 +58,6 @@ private:
     
     Talon* grabber; //Talon 3
     
-    //CANJaguar* tilt; //CANJag 1
+    CANJaguar* tilt;
 };
 #endif

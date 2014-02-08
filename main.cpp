@@ -15,6 +15,7 @@ robot_class::robot_class()
 
 void robot_class::RobotInit()
 {
+    std::printf("TEST CODE 1.0");
     robot = this;
     driverJoy = new SmoothJoystick(DRIVER_JOY_PORT);
     
@@ -128,6 +129,18 @@ void robot_class::getButtons()
             motors->disable();
         }
     }
+    /*
+    else if (driverJoy->GetRawButton(BUTTON_L2))
+    {
+        speed = speed + 0.02;
+        std::printf("Jag Speed: %f \n", speed);
+    }
+    else if (driverJoy->GetRawButton(BUTTON_R2))
+    {
+        speed = speed - 0.02;
+        std::printf("Jag Speed: %f \n", speed);
+    }
+    */
 }
 
 START_ROBOT_CLASS(robot_class)

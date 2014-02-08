@@ -42,6 +42,7 @@ public:
     Pneumatics* pneumatics;
     UpdateRegistry updateRegistry;
     int selection;
+    float speed;
 private:
     BUTTON button;
     void printStuff();

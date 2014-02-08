@@ -42,18 +42,18 @@ const static uint32_t CLAMP_PORT_2 = 6;
 
 //Encoders
 const uint8_t  LEFT_ENCODER_A_MOD  = 1;
-const uint32_t LEFT_ENCODER_A_CHAN = 1;
+const uint32_t LEFT_ENCODER_A_CHAN = 5;
 
 const uint8_t  LEFT_ENCODER_B_MOD  = 1;
-const uint32_t LEFT_ENCODER_B_CHAN = 1;
+const uint32_t LEFT_ENCODER_B_CHAN = 4;
 
 
 
 const uint8_t  RIGHT_ENCODER_A_MOD  = 1;
-const uint32_t RIGHT_ENCODER_A_CHAN = 2;
+const uint32_t RIGHT_ENCODER_A_CHAN = 7;
 
 const uint8_t  RIGHT_ENCODER_B_MOD  = 1;
-const uint32_t RIGHT_ENCODER_B_CHAN = 2;
+const uint32_t RIGHT_ENCODER_B_CHAN = 6;
 
 //Ultrasonic
 const uint8_t ULTRASONIC_MODULE = 1; //FILLER
