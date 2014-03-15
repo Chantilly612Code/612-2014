@@ -42,5 +42,3 @@ bool Netcom::getHotGoal()
 {
     return (nwt612 -> GetBoolean(HOTKEY, false));
 }
-
-//don't even know what' wrong!!!
