@@ -35,7 +35,7 @@ public:
     Gyro* gyro612;
 
     float getGyroAngle();
-    double getGyroRate();
+    float getGyroRate();
     void gyroReset();
     void setGyroSens(float vpdps); //Set the Gyro Sensitivitutbgsvi sh
 

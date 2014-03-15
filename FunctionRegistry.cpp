@@ -1,14 +1,13 @@
 #include <vector>
+
 #include "FunctionRegistry.h"
 
 FunctionRegistry::FunctionRegistry()
 {
-
 }
 
 FunctionRegistry::~FunctionRegistry()
 {
-
 }
 
 void FunctionRegistry::updateFunctions()

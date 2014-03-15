@@ -47,7 +47,7 @@ void DriveTrain::autoDrive(double distance)
 void DriveTrain::autoTurn(double degrees)           // any degrees less than zero (0) will turn right; basically the unit circle
 {
     stopAuto();
-    double degrees2Radians = degrees * (PI/180);
+    double degrees2Radians = degrees * (PI/180.0);
     double arcLength = ROBOTRAD * degrees2Radians;  // checks the length of the arc in feet
     neededDist = arcLength;
     if (degrees > 0){
@@ -90,27 +90,8 @@ void DriveTrain::update()
             speedR = 0.0f;
         }
         TankDrive(speedL, speedR);
-        /*speedL = SPEED;
-        if (encode->getLDistance() >= neededDist)
-        {
-            encode->EncoderL->Stop();
-            encode->EncoderL->Reset();
-            isMovingL = false;
-            speedL = 0.0f;
-        }
-        speedR = SPEED;
-        if (encode->getRDistance() >= neededDist)
-        {
-            encode->EncoderR->Stop();
-            encode->EncoderR->Reset();
-            isMovingR = false;
-            speedR = 0.0f;
-        }
-        if (speedL == 0.0f && speedR == 0.0f)
-            hasDriven = true;
-        TankDrive(speedL, speedR);*/
     }
-    if (isTurningL) // NeededDist is positive
+    if (isTurningL) // Needed Dist is positive
     {
         speedL = SPEED;
         if (encode->getLDistance() <= -neededDist)
@@ -156,12 +137,6 @@ void DriveTrain::update()
     }
 }
 
-/*void DriveTrain::updateHelper(void* instName)
-{
-    DriveTrain* driveObj = (DriveTrain*)instName;
-    driveObj->update();
-}*/
-
 bool DriveTrain::isAuto()
 {
     return ((isMovingL) || (isMovingR) || (isTurningL) || (isTurningR));
@@ -170,10 +145,10 @@ bool DriveTrain::isAuto()
 void DriveTrain::stopAuto()
 {
     TankDrive(0.0f, 0.0f);
-    encode->EncoderL->Stop();
-    encode->EncoderR->Stop();
-    encode->EncoderL->Reset();
-    encode->EncoderR->Reset();
+    encode -> EncoderL -> Stop();
+    encode -> EncoderR -> Stop();
+    encode -> EncoderL -> Reset();
+    encode -> EncoderR -> Reset();
     isMovingL = false;
     isMovingR = false;
     isTurningL = false;
