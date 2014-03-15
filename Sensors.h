@@ -3,6 +3,7 @@
 
 #include <AnalogChannel.h>
 #include <Gyro.h>
+
 #include "ports.h"
 
 class main_robot;
@@ -13,8 +14,9 @@ public:
     AnalogChannel* ultrasonic;
     AnalogChannel* infraredShooter;
     AnalogChannel* infraredLoad;
-    static const double VPMINF = 7.38976; //volate per meter shooter
-    static const double VPIULTRA = 0.0098;
+    
+    static const double IR_CONVERSION = 7.38976; //volts per meter IR Sensor (on shooter)
+    static const double ULTRASONIC_CONVERSION = 0.0098; //volts per inch ultrasonic 
 
     Sensors(main_robot* robot,
             uint8_t usMod, uint32_t usChan, uint8_t isMod, uint32_t isChan,

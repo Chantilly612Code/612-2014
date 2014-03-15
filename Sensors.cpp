@@ -45,23 +45,21 @@ float Sensors::getVoltsUltra()
 
 float Sensors::getInfraredShooter()
 {
-    // 18.77cm/V = 7.38976in/V
-    return (getVoltsInfShooter() * VPMINF );
+    return (getVoltsInfShooter() * IR_CONVERSION );
 }
 
 bool Sensors::getInfraredLoad()
 {
-    float loadDistance = getVoltsInfLoad() * VPMINF ;
+    float loadDistance = getVoltsInfLoad() * IR_CONVERSION ;
     if(loadDistance < LOAD_THRESHOLD)
         return true;
-    else
-        return false;
+    return false;
 }
 
 float Sensors::getUltrasonic()
 {
     // 9.8mV/in = 0.0098V/in
-    return (getVoltsUltra() / VPIULTRA);
+    return (getVoltsUltra() / ULTRASONIC_CONVERSION);
 }
 
 
@@ -73,14 +71,12 @@ void Sensors::updateHelper(void* instName)
 
 float Sensors::getGyroAngle()
 {
-    float gyAngle = gyro612->GetAngle();
-    return gyAngle;
+    return gyro612->GetAngle();
 }
 
-double Sensors::getGyroRate()
+float Sensors::getGyroRate()
 {
-    double gyRate = gyro612->GetRate();
-    return gyRate;
+    return gyro612->GetRate();
 }
 
 void Sensors::gyroReset()
@@ -88,7 +84,7 @@ void Sensors::gyroReset()
     gyro612->Reset();
 }
 
-void Sensors::setGyroSens(float vpdps /*Volts Per Degree Per Second*/)
+void Sensors::setGyroSens(float gyroSensitivity) //Volts Per Degree Per Second
 {
-    gyro612->SetSensitivity(vpdps);
+    gyro612->SetSensitivity(gyroSensitivity);
 }
