@@ -4,8 +4,8 @@
 /* must be accompanied by the FIRST BSD license file in $(WIND_BASE)/WPILib.  */
 /*----------------------------------------------------------------------------*/
 
-#ifndef __ADXL345_I2C_h__
-#define __ADXL345_I2C_h__
+#ifndef __ADXL345_I2C_612_h__
+#define __ADXL345_I2C_612_h__
 
 #include <SensorBase.h>
 
