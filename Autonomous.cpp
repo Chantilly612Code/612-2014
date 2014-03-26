@@ -7,7 +7,8 @@ Autonomous::Autonomous(main_robot* r)
 {
     robot = r;
     timer = new Timer();
-    previousStage = stage = IDLE;
+    stage = IDLE;
+    previousStage = stage;
 }
 
 Autonomous::~Autonomous()
@@ -18,22 +19,16 @@ Autonomous::~Autonomous()
 bool Autonomous::moveForward(double dist)
 {
     if (previousStage != stage)
-    {
         robot->drive->autoDrive(dist);
-    }
     return !(robot->drive->isAuto());
 }
 
 bool Autonomous::tilt(double angle)        // needs to tilt a certain degrees, probably starting from below going up
 {
     if (previousStage != stage)
-    {
         robot->shoot->pitchAngle(angle);
-    }
     if(!robot->shoot->accelWorking)
-    {
         return false;
-    }
     return robot->shoot->hasTilted;
 }
 
@@ -46,9 +41,7 @@ bool Autonomous::wormPull()
     }
     bool wormDone = robot->shoot->wormDone();
     if(wormDone)
-    {
         robot->shoot->autoPulling=false;
-    }
     return wormDone;
 }
 /*
@@ -64,9 +57,7 @@ bool Autonomous::timePassed(float time)
 bool Autonomous::smartFire()
 {
     if (previousStage != stage)
-    {
         robot->shoot->smartFire();
-    }
     return !robot->shoot->smartFiring;
 }
 /*
@@ -88,9 +79,7 @@ void Autonomous::updateHighGoal()
             bool aimDone=tilt(HIGHGOAL_AUTOANGLE);
             bool winchDone=wormPull();
             if(output%20==0)
-            {
                 printf("drive: %i, aim: %i, winch: %i\n",driveDone,aimDone,winchDone);
-            }
             if(driveDone && aimDone && winchDone)
             {
                 printf("AUTO switch to SMART_FIRE\n");
@@ -126,7 +115,6 @@ void Autonomous::updateBasicDrive()
             return; // so it doesn't set the previous stage
         case BASIC_DRIVE:
             if(moveForward(DISTANCE))
-//            if(tilt(Shooter::SHOOTING_POSITION))
             {
                 printf("AUTO done\n");
                 stage = DONE;
