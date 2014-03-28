@@ -50,7 +50,7 @@ public:
     DoubleSolenoid* puncher;
     ADXL345_I2C_612* bobTheAccelerometer;
     main_robot* robot;
-    FILE* angleLog;
+    ofstream angleLog;
 
     bool isPickingUp;
     bool isPitchingUp;

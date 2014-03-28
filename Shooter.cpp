@@ -16,7 +16,8 @@ Shooter::Shooter(main_robot* r,uint8_t axisCan,
                  uint8_t clampMod, uint32_t clampFChan, uint32_t clampRChan,
                  uint8_t wormCan,
                  uint8_t punchMod,uint32_t punchFChan,uint32_t punchRChan,
-                 uint8_t bobMod):isPickingUp(false),isPitchingUp(false),
+                 uint8_t bobMod): angleLog("testLog.txt", std::ofstream::out, std::ofstream::app),
+                 isPickingUp(false),isPitchingUp(false),
                  isPitchingDown(false),wormIsPulling(false),winching(false),
                  hasTilted(false),isPickingUpStopping(false),autoPulling(false),
                  smartFiring(false),accelWorking(true),smartFireTimer(new Timer())
@@ -28,7 +29,6 @@ Shooter::Shooter(main_robot* r,uint8_t axisCan,
     wormGear = new CANJaguar(wormCan);
     puncher = new DoubleSolenoid(punchMod,punchFChan,punchRChan);
     bobTheAccelerometer = new ADXL345_I2C_612(bobMod);
-    angleLog = fopen("angles.txt", "w");
     isPickingUp = false;
     shooterJoy = robot -> gunnerJoy;
     shooterJoy -> addJoyFunctions(&buttonHelper,(void*)this,CLAMP);
@@ -231,8 +231,11 @@ void Shooter::update()
         isPitchingDown = false;
     }
     currentPitch = (atan2(bobX, sqrt(bobY*bobY + bobZ*bobZ))*180.0)/PI;
-    fprintf(angleLog, "Current Angle: %i\n", currentPitch);
-
+    static int logCap;
+    if(logCap % 20 == 0)
+    {
+        angleLog << "This angle:" << currentPitch << "\n";
+    }
     static int output = 0;
     if(output%20 == 0)
     {

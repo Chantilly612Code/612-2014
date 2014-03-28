@@ -20,7 +20,9 @@ public:
 
     bool timePassed(float time);        //time measured in seconds
     Timer* timer;
-    FILE* log;
+
+    ofstream log;
+
     Shooter* autoShooter;
     enum State {DRIVE_AIM_WINCH, SMART_FIRE, BASIC_DRIVE, IDLE, DONE};
     State stage;
@@ -29,6 +31,7 @@ public:
 
     void updateHighGoal();
     void updateBasicDrive();
+    void testDataLoging();
 
     static const double DISTANCE = 151;
     static const double DEGREES_TURN = 25;
