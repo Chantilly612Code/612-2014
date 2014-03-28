@@ -4,6 +4,7 @@
 #include <CANJaguar.h>
 #include <Talon.h>
 #include <DoubleSolenoid.h>
+#include <fstream>
 #include "ADXL345_I2C_612.h"
 #include <cmath>
 #include "controls.h"
@@ -49,6 +50,7 @@ public:
     DoubleSolenoid* puncher;
     ADXL345_I2C_612* bobTheAccelerometer;
     main_robot* robot;
+    FILE* angleLog;
 
     bool isPickingUp;
     bool isPitchingUp;

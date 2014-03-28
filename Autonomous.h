@@ -3,6 +3,7 @@
 #include "DriveTrain.h"
 #include "Shooter.h"
 #include <Timer.h>
+#include <fstream>
 
 // the auto methods return true when completed
 
@@ -19,6 +20,8 @@ public:
 
     bool timePassed(float time);        //time measured in seconds
     Timer* timer;
+    FILE* log;
+    Shooter* autoShooter;
     enum State {DRIVE_AIM_WINCH, SMART_FIRE, BASIC_DRIVE, IDLE, DONE};
     State stage;
     State previousStage;

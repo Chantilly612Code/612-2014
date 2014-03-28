@@ -3,6 +3,7 @@
 #include "SmoothJoystick.h"
 #include "main.h"
 #include "ADXL345_I2C_612.h"
+#include "Autonomous.h"
 
 const double Shooter::SPEED_AXISPOWER_TELEOP = 0.60;
 const double Shooter::SPEED_AXISPOWER_AUTO_SLOW = 0.60;
@@ -27,6 +28,7 @@ Shooter::Shooter(main_robot* r,uint8_t axisCan,
     wormGear = new CANJaguar(wormCan);
     puncher = new DoubleSolenoid(punchMod,punchFChan,punchRChan);
     bobTheAccelerometer = new ADXL345_I2C_612(bobMod);
+    angleLog = fopen("angles.txt", "w");
     isPickingUp = false;
     shooterJoy = robot -> gunnerJoy;
     shooterJoy -> addJoyFunctions(&buttonHelper,(void*)this,CLAMP);
@@ -229,6 +231,7 @@ void Shooter::update()
         isPitchingDown = false;
     }
     currentPitch = (atan2(bobX, sqrt(bobY*bobY + bobZ*bobZ))*180.0)/PI;
+    fprintf(angleLog, "Current Angle: %i\n", currentPitch);
 
     static int output = 0;
     if(output%20 == 0)
@@ -322,7 +325,7 @@ void Shooter::update()
         smartFiring = false;
         smartFireTimer->Stop();
     }
-    
+
     if(wormIsPulling)
     {
         wormGear->Set(SPEED_WORM);
