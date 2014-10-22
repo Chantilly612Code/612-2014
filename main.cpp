@@ -164,13 +164,13 @@ void main_robot::stop_vision() {
     }*/
 }
 
-void main_robot::StopAll()
+/*void main_robot::StopAll()
 {
     drive->stopAuto();
     shift->setLow();
     shoot->pitchStop();
     shoot->rollerStop();
     shoot->wormStop();
-}
+}*/
 
 START_ROBOT_CLASS(main_robot)

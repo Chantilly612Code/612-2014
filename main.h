@@ -33,7 +33,7 @@ public:
     void AutonomousPeriodic();
     void DisabledPeriodic();
     void TestPeriodic();
-    void StopAll();
+    //void StopAll();
     SmoothJoystick* driverJoy;
     SmoothJoystick* gunnerJoy;
     Pneumatics* pnum;
