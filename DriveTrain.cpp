@@ -3,7 +3,8 @@
 #include "612.h"
 #include "main.h"
 
-const double DriveTrain::SPEED=1.0;
+double DriveTrain::SPEEDR = 1.0;
+double DriveTrain::SPEEDL = 1.0;
 
 // all in feet
 const double DriveTrain::CIRCUMROBOT = 2 * PI * ROBOTRAD;
@@ -70,7 +71,7 @@ void DriveTrain::teleTurn(Dir direction, double power)
         stopAuto();
     if (direction == RIGHT)
         TankDrive(power,-1*power);
-    else if (direction == LEFT) //jank yo!
+    else if (direction == LEFT) //not jank yo!
         TankDrive(-1*power,power);
 }
 
@@ -78,7 +79,7 @@ void DriveTrain::updateDrive()
 {
     if (isMovingL || isMovingR)
     {
-/*        speedL = SPEED;
+/*      speedL = SPEED;
         speedR = SPEED;
         double varUltraDist = (double)robot->sensors->getUltrasonic();
         if (originUltraDist-varUltraDist >= neededDist)
@@ -116,16 +117,27 @@ void DriveTrain::updateDrive()
 
 void DriveTrain::updateTurn()
 {
+	if(encode->numOfRPulses() >= encode->numOfLPulses())
+	{
+		SPEEDL = 1.0f;
+		SPEEDR = (encode->numOfRPulses())/(encode->numOfLPulses());
+	}
+	else
+	{
+		SPEEDR = 1.0f;
+		SPEEDL = (encode->numOfLPulses())/(encode->numOfRPulses());
+	}
+	
     if (isTurningL) // NeededDist is positive
     {
-        speedL = SPEED;
+        speedL = SPEEDL;
         if (encode->getLDistance() <= -neededDist)
         {
             encode->EncoderL->Stop();
             encode->EncoderL->Reset();
             speedL = 0.0f;
         }
-        speedR = SPEED;
+        speedR = SPEEDR;
         if (encode->getRDistance() >= neededDist)
         {
             encode->EncoderR->Stop();
@@ -140,14 +152,14 @@ void DriveTrain::updateTurn()
     }
     else if (isTurningR)
     {
-        speedL = SPEED;
+        speedL = SPEEDL;
         if (encode->getLDistance() >= -neededDist)
         {
             encode->EncoderL->Stop();
             encode->EncoderL->Reset();
             speedL = 0.0f;
         }
-        speedR = SPEED;
+        speedR = SPEEDR;
         if (encode->getRDistance() <= neededDist)
         {
             encode->EncoderR->Stop();
