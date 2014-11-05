@@ -5,6 +5,7 @@
 #include <Talon.h>
 #include <DoubleSolenoid.h>
 #include <AnalogChannel.h>
+#include <fstream>
 #include "ADXL345_I2C_612.h"
 #include <cmath>
 #include "controls.h"
@@ -58,6 +59,7 @@ public:
     ADXL345_I2C_612* bobTheAccelerometer;
 //  AnalogChannel* bobThePot;
     main_robot* robot;
+    ofstream angleLog;
 
     bool isPickingUp;
     bool isPitchingUp;
@@ -87,7 +89,7 @@ public:
     static const double SMARTFIRE_TIME = 0.25;
     static const double PI = 3.14159;
     static const double VERTICAL_POSITION = 81.89;
-    static const double HIGHGOAL_POSITION = 36; // suppoed to be 43, 82 inches
+    static const double HIGHGOAL_POSITION = 36; // supposed to be 43, 82 inches
     static const double PICKUP_POSITION   = -25;
     static const double LOWGOAL_POSITION  = 49;
     static const double SPEED_WORM; //What we start at

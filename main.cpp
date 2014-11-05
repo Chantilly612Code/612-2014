@@ -60,7 +60,8 @@ void main_robot::AutonomousInit()
     shoot->pitchStop();
     shoot->rollerStop();
     shoot->wormStop();
-    shift->setHigh();
+    shift->setLow();
+    autoBot->testDataLoging();
 }
 void main_robot::TestInit()
 {
@@ -92,39 +93,39 @@ void main_robot::TeleopPeriodic()
         prevLeft = 0.0f;
         loopLeft = 0;
     }
-    
+
     if (loopLeft > 0)
     {
         --loopLeft;
         rawleft = prevLeft;
     }
-    
+
     if (fabs(rawleft - prevLeft) > GLIDE_THRESHOLD)
     {
         rawleft = prevLeft + GLIDE_INCREMENT;
         loopLeft = GLIDE_ITERATIONS;
     }
-    
+
     prevLeft = rawleft;
-    
+
     if (fabs(rawright) < SmoothJoystick::DEADZONE)
     {
         prevRight = 0.0f;
         loopRight = 0;
     }
-    
+
     if (loopRight > 0)
     {
         --loopRight;
         rawright = prevRight;
     }
-    
+
     if (fabs(rawright - prevRight) > GLIDE_THRESHOLD)
     {
         rawright = prevRight + GLIDE_INCREMENT;
         loopRight = GLIDE_ITERATIONS;
     }
-    
+
     prevRight = rawRight;*/
 }
 
@@ -182,5 +183,14 @@ void main_robot::stop_vision() {
         engine=NULL;
     }*/
 }
+
+/*void main_robot::StopAll()
+{
+    drive->stopAuto();
+    shift->setLow();
+    shoot->pitchStop();
+    shoot->rollerStop();
+    shoot->wormStop();
+}*/
 
 START_ROBOT_CLASS(main_robot)

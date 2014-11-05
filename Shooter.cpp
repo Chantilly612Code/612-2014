@@ -3,6 +3,7 @@
 #include "SmoothJoystick.h"
 #include "main.h"
 #include "ADXL345_I2C_612.h"
+#include "Autonomous.h"
 
 const double Shooter::SPEED_AXISPOWER_TELEOP = 0.80;
 const double Shooter::SPEED_AXISPOWER_AUTO_SLOW = 0.40;
@@ -18,6 +19,8 @@ Shooter::Shooter(main_robot* r,uint8_t axisCan,
                  uint8_t punchMod,uint32_t punchFChan,uint32_t punchRChan,
                  uint8_t bobMod)
                  :isPickingUp(false),isPitchingUp(false),
+                 uint8_t bobMod): angleLog("testLog.txt", std::ofstream::out, std::ofstream::app),
+                 isPickingUp(false),isPitchingUp(false),
                  isPitchingDown(false),wormIsPulling(false),winching(false),
                  hasTilted(false),isPickingUpStopping(false),autoPulling(false),
                  smartFiring(false),accelWorking(true),smartFireTimer(new Timer())
@@ -247,6 +250,7 @@ double Shooter::getAngle() {
         isPitchingUp = false;
         isPitchingDown = false;
     }
+<<<<<<< HEAD
     double newPitch = (atan2(bobX, sqrt(bobY*bobY + bobZ*bobZ))*180.0)/PI;
     //    if(fabs(newPitch-currentPitch) < 10)
     currentPitch = newPitch;
@@ -280,6 +284,14 @@ void Shooter::update()
 {
     getAngle();
 
+=======
+    currentPitch = (atan2(bobX, sqrt(bobY*bobY + bobZ*bobZ))*180.0)/PI;
+    static int logCap;
+    if(logCap % 20 == 0)
+    {
+        angleLog << "This angle:" << currentPitch << "\n";
+    }
+>>>>>>> fd15f38cd21d261944ac7b98052015e2b3e9bfb9
     static int output = 0;
     if(output%20 == 0)
     {
@@ -374,7 +386,7 @@ void Shooter::update()
         smartFiring = false;
         smartFireTimer->Stop();
     }
-    
+
     if(wormIsPulling)
     {
         wormGear->Set(SPEED_WORM);
