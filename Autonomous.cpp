@@ -10,9 +10,7 @@
 
 std::string AUTO_TABLE_NAME="PCVision";
 
-Autonomous::Autonomous(main_robot* r):table(NetworkTable::GetTable(AUTO_TABLE_NAME))
-
-Autonomous::Autonomous(main_robot* r): log("testLog.txt", std::ofstream::out, std::ofstream::app)
+Autonomous::Autonomous(main_robot* r): log("testLog.txt", std::ofstream::out, std::ofstream::app): table(NetworkTable::GetTable(AUTO_TABLE_NAME))
 {
     robot = r;
     timer = new Timer();
