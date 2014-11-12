@@ -17,9 +17,8 @@ Shooter::Shooter(main_robot* r,uint8_t axisCan,
                  uint8_t clampMod, uint32_t clampFChan, uint32_t clampRChan,
                  uint8_t wormCan,
                  uint8_t punchMod,uint32_t punchFChan,uint32_t punchRChan,
-                 uint8_t bobMod)
-                 :isPickingUp(false),isPitchingUp(false),
-                 uint8_t bobMod): angleLog("testLog.txt", std::ofstream::out, std::ofstream::app),
+                 uint8_t bobMod):
+                 angleLog("testLog.txt", std::ofstream::out, std::ofstream::app),
                  isPickingUp(false),isPitchingUp(false),
                  isPitchingDown(false),wormIsPulling(false),winching(false),
                  hasTilted(false),isPickingUpStopping(false),autoPulling(false),
@@ -244,13 +243,13 @@ double Shooter::getAngle() {
     double bobX = bobTheAccelerometer->GetAcceleration(ADXL345_I2C_612::kAxis_X);
     double bobY = bobTheAccelerometer->GetAcceleration(ADXL345_I2C_612::kAxis_Y);
     double bobZ = bobTheAccelerometer->GetAcceleration(ADXL345_I2C_612::kAxis_Z);
+    
     accelWorking = !(doubleEqual(bobX,0.0) && doubleEqual(bobY,0.0) && doubleEqual(bobZ,0.0));
     if(!accelWorking)
     {
         isPitchingUp = false;
         isPitchingDown = false;
     }
-<<<<<<< HEAD
     double newPitch = (atan2(bobX, sqrt(bobY*bobY + bobZ*bobZ))*180.0)/PI;
     //    if(fabs(newPitch-currentPitch) < 10)
     currentPitch = newPitch;
@@ -282,17 +281,20 @@ void Shooter::setPickupHelper(void* instName, uint32_t button) {
 
 void Shooter::update()
 {
+    double bobX = bobTheAccelerometer->GetAcceleration(ADXL345_I2C_612::kAxis_X);
+    double bobY = bobTheAccelerometer->GetAcceleration(ADXL345_I2C_612::kAxis_Y);
+    double bobZ = bobTheAccelerometer->GetAcceleration(ADXL345_I2C_612::kAxis_Z);
+    
     getAngle();
 
-=======
     currentPitch = (atan2(bobX, sqrt(bobY*bobY + bobZ*bobZ))*180.0)/PI;
     static int logCap;
+    static int output = 0;
     if(logCap % 20 == 0)
     {
         angleLog << "This angle:" << currentPitch << "\n";
     }
->>>>>>> fd15f38cd21d261944ac7b98052015e2b3e9bfb9
-    static int output = 0;
+
     if(output%20 == 0)
     {
         printf("Tilt Angle: %f\n",currentPitch);

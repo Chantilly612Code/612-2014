@@ -38,7 +38,7 @@ void DriveTrain::autoDrive(double distance)
 {
     stopAuto();
     neededDist = distance;
-    TankDrive(SPEED, SPEED);
+    TankDrive(SPEEDL, SPEEDR);
     isMovingL = true;
     isMovingR = true;
     encode->EncoderL->Start();
@@ -53,11 +53,11 @@ void DriveTrain::autoTurn(double degrees)           // any degrees less than zer
     double arcLength = ROBOTRAD * degrees2Radians;  // checks the length of the arc in feet
     neededDist = arcLength;
     if (degrees > 0) {
-        TankDrive(-SPEED, SPEED);
+        TankDrive(-SPEEDL, SPEEDR);
         isTurningL = true;
     }
     if (degrees < 0) {
-        TankDrive(SPEED, -SPEED);
+        TankDrive(SPEEDL, -SPEEDR);
         isTurningR = true;
     }
     hasTurned = false;
@@ -93,7 +93,7 @@ void DriveTrain::updateDrive()
         if (speedL = 0.0f && speedR == 0.0f)
             hasDriven = true;
         TankDrive(speedL, speedR);*/
-        speedL = SPEED;           //USING ENCODERS
+        speedL = SPEEDL;           //USING ENCODERS
         if (encode->getLDistance() >= neededDist)
         {
 //            encode->EncoderL->Stop();
@@ -101,7 +101,7 @@ void DriveTrain::updateDrive()
             isMovingL = false;
             speedL = 0.0f;
         }
-        speedR = SPEED;
+        speedR = SPEEDR;
         if (encode->getLDistance() >= neededDist)
         {
             encode->EncoderL->Stop();
@@ -204,3 +204,4 @@ void DriveTrain::stopAuto()
     isTurningR = false;
     hasDriven = false;
 }
+

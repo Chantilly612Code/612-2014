@@ -59,7 +59,6 @@ public:
     ADXL345_I2C_612* bobTheAccelerometer;
 //  AnalogChannel* bobThePot;
     main_robot* robot;
-    ofstream angleLog;
 
     bool isPickingUp;
     bool isPitchingUp;
@@ -76,6 +75,8 @@ public:
     double originPitch;
     Timer* smartFireTimer;
     //double currentSpeed;
+    
+    ofstream angleLog;
 
     static const double SPEED_AXISPOWER_TELEOP;
     static const double SPEED_AXISPOWER_AUTO_SLOW;

@@ -10,7 +10,7 @@
 
 std::string AUTO_TABLE_NAME="PCVision";
 
-Autonomous::Autonomous(main_robot* r): log("testLog.txt", std::ofstream::out, std::ofstream::app): table(NetworkTable::GetTable(AUTO_TABLE_NAME))
+Autonomous::Autonomous(main_robot* r): log("testLog.txt", std::ofstream::out, std::ofstream::app), table(NetworkTable::GetTable(AUTO_TABLE_NAME))
 {
     robot = r;
     timer = new Timer();
@@ -141,6 +141,21 @@ void Autonomous::updateHighGoal()
     static int output=0;
     switch (stage)
     {
+	case DRIVE_AIM_WINCH:
+            bool driveDone=moveForward(DISTANCE);
+            bool aimDone=tilt(HIGHGOAL_AUTOANGLE);
+            bool winchDone=wormPull();
+            if(output%20==0)
+            {
+                printf("drive: %i, aim: %i, winch: %i\n",driveDone,aimDone,winchDone);
+                static int logCap;
+                if(logCap % 20 == 0)
+                {
+                    log << "drive:" << driveDone << aimDone << winchDone << "\n";
+                    log.flush();
+                }
+                logCap++;
+            }
         case IDLE:
             printf("AUTO switch to COARSE_AIM\n");
             stage = COARSE_AIM;
@@ -159,8 +174,6 @@ void Autonomous::updateHighGoal()
             {
                 printf("AUTO switch to FINE_AIM\n");
                 stage = FINE_AIM;
-                return;
-                printf("drive: %i, aim: %i, winch: %i\n",driveDone,aimDone,winchDone);
                 static int logCap;
                 if(logCap % 20 == 0)
                 {
@@ -168,6 +181,7 @@ void Autonomous::updateHighGoal()
                     log.flush();
                 }
                 logCap++;
+                return;
             }
             break;
         case BASIC_DRIVE:

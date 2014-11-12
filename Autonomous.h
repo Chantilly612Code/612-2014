@@ -23,10 +23,9 @@ public:
     bool timePassed(float time);        //time measured in seconds
     Timer* timer;
     Timer* shotTimer;
-    enum State {COARSE_AIM, FINE_AIM_WAIT, FINE_AIM, IS_HOT, SMART_FIRE, BASIC_DRIVE, IDLE, DONE};
+    enum State {COARSE_AIM, FINE_AIM_WAIT, FINE_AIM, IS_HOT, SMART_FIRE, BASIC_DRIVE, IDLE, DRIVE_AIM_WINCH, DONE};
     ofstream log;
     Shooter* autoShooter;
-    enum State {DRIVE_AIM_WINCH, SMART_FIRE, BASIC_DRIVE, IDLE, DONE};
     State stage;
     State previousStage;
     main_robot* robot;
