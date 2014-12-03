@@ -16,13 +16,16 @@ Shooter::Shooter(main_robot* r,uint8_t axisCan,
                  uint8_t clampMod, uint32_t clampFChan, uint32_t clampRChan,
                  uint8_t wormCan,
                  uint8_t punchMod,uint32_t punchFChan,uint32_t punchRChan,
-                 uint8_t bobMod)
+                 uint8_t bobMod,
+				 Pneumatics* pnum_7Wheel, DoubleSolenoid* solenoid_7Wheel)
                  :isPickingUp(false),isPitchingUp(false),
                  isPitchingDown(false),wormIsPulling(false),winching(false),
                  hasTilted(false),isPickingUpStopping(false),autoPulling(false),
                  smartFiring(false),accelWorking(true),smartFireTimer(new Timer())
 {
     robot = r;
+	this.pnum_7Wheel = pnum_7Wheel;
+	this.solenoid_7Wheel = solenoid_7Wheel;
     axis = new CANJaguar(axisCan);
     attractor = new Talon(attractMod, attractChan);
     clamper = new DoubleSolenoid(clampMod, clampFChan, clampRChan);
@@ -31,6 +34,8 @@ Shooter::Shooter(main_robot* r,uint8_t axisCan,
     bobTheAccelerometer = new ADXL345_I2C_612(bobMod);
 //  bobThePot = new AnalogChannel(1,5);
     isPickingUp = false;
+    7WheelExtend = false;
+    7WheelOldState = false;
     shooterJoy = robot -> gunnerJoy;
     shooterJoy -> addJoyFunctions(&buttonHelper,(void*)this,CLAMP);
     shooterJoy -> addJoyFunctions(&buttonHelper,(void*)this,ENERGIZE);
@@ -45,6 +50,7 @@ Shooter::Shooter(main_robot* r,uint8_t axisCan,
 Shooter::~Shooter()
 {
     delete axis;
+    delete pnum_7Wheel;
     delete attractor;
     delete clamper;
     delete bobTheAccelerometer;
@@ -153,17 +159,28 @@ void Shooter::clampUp()
     clamp = up;
 }
 
-void Shooter::wormPull()
+void Shooter::7WheelUpdate() 
 {
-    if(wormDone())
-    {
-        return;
-    }
-    if(!wormIsPulling)
-    {
-        robot -> pnum -> setVectorValues(PUNCH_TIME, puncher, DoubleSolenoid::kForward);
-    }
-    wormIsPulling = true;
+	if(!(ShooterJoy -> GetSmoothButton(CLAMP))
+	{
+	    7WheelOldState = false;
+	}
+	else
+	{
+	    if(!7WheelOldState)
+	    {
+	        7WheelOldState = true;
+	        7WheelExtend = !7WheelExtend;
+	    }
+	}
+	if(7WheelExtend)
+	{
+	    pnum_7Wheel->setVectorValues(TIME, solenoid_7Wheel, DoubleSolenoid::kForward);
+	}
+	else
+	{
+	    pnum_7Wheel->setVectorValues(TIME, solenoid_7Wheel, DoubleSolenoid::kReverse);
+	}
 }
 
 void Shooter::wormStop()
@@ -381,6 +398,7 @@ void Shooter::update()
         if (wormDone()) //checks if loader has reached farthest position
             wormStop();
     }
+    7WheelUpdate();
 }
 
 void Shooter::updateHelper(void* instName)

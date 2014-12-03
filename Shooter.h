@@ -23,10 +23,14 @@ public:
             uint8_t clampMod, uint32_t clampFChan, uint32_t clampRChan,
             uint8_t wormCan,
             uint8_t punchMod,uint32_t punchFChan,uint32_t punchRChan,
-            uint8_t bobMod);
+            uint8_t bobMod,
+			Pneumatics* pnum_7Wheel);
     ~Shooter();
     enum Clamp {down, up};
     Clamp clamp;
+    Pneumatics* pnum_7Wheel;
+    DoubleSolenoid* solenoid_7Wheel;
+    void 7WheelUpdate();
     void pitchUp();
     void pitchDown();
     void pitchStop();
@@ -63,6 +67,8 @@ public:
     bool isPitchingUp;
     bool isPitchingDown;
     bool wormIsPulling;
+    bool 7WheelExtend;
+    bool 7WheelOldState;
     bool winching;
     bool hasTilted;
     bool isPickingUpStopping;

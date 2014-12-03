@@ -25,6 +25,8 @@ void main_robot::RobotInit()
     driverJoy = new SmoothJoystick(this, DRIVER_JOY_PORT);
     gunnerJoy = new SmoothJoystick(this, GUNNER_JOY_PORT);
     pnum = new Pneumatics(this, PNUM_DIGIN_MODULE, PNUM_DIGIN_CHANNEL, PNUM_RELAY_MODULE, PNUM_RELAY_CHANNEL);
+	pnum_7wheel = new Pneumatics(this, PNUM_7WHEEL_MODULE, PNUM_7WHEEL_CHANNEL, PNUM_7WHEEL_MODULE, PNUM_7WHEEL_CHANNEL);
+	solenoid_7Wheel = new DoubleSolenoid(SHOOT_7WHEEL_MODULE, SHOOT_7WHEEL_FCHAN, SHOOT_7WHEEL_RCHAN);
     shift = new Shifter(this, SHIFT_MOD, SHIFT_FCHAN, SHIFT_RCHAN);
     shift->setHigh();
     drive = new DriveTrain(this, TALON_FL_MODULE, TALON_FL_CHANNEL,
@@ -36,7 +38,8 @@ void main_robot::RobotInit()
                         SHOOT_SLNOID_MODULE, SHOOT_SLNOID_FCHAN, SHOOT_SLNOID_RCHAN,
                         WORM_JAG_CAN,
                         PUNCH_SLNOID_MODULE, PUNCH_SLNOID_FCHAN, PUNCH_SLNOID_RCHAN,
-                        SHOOT_ACCEL_MODULE);
+                        SHOOT_ACCEL_MODULE,
+						pnum_7Wheel, solenoid_7Wheel);
     sensors = new Sensors(this, USMODNUMBER, USCHANNEL, ISMODNUMBER, ISCHANNEL, ILMODNUMBER, ILCHANNEL, GYMOD, GYCHAN);
     sensors->setGyroSens(1.0f); //default sensitivity
     printf("Welcome to 612-2014 AERIAL ASSIST\n");
