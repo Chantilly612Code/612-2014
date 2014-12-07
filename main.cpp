@@ -158,14 +158,16 @@ void main_robot::DisabledPeriodic()
 }
 void main_robot::TestPeriodic()
 {
-    static int output=0;
+    /*static int output=0;
     if(output%20==0) {
         printf("Supposed to wait: %i\n",autoBot->table->GetBoolean("1/WeWait",false));
     }
-    output++;
+    output++;*/
 //    printf("%d", engine->getHotGoal());
 //    pnum->checkPressure();
 //    pnum->updateSolenoid();
+    if(gunnerJoy->GetRawButton() == 3)
+      
 }
 
 void main_robot::init_vision() {
