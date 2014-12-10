@@ -15,10 +15,11 @@ const static uint8_t  TALON_RR_MODULE  = 1;
 // Pneumatics Channels
 const static uint32_t PNUM_DIGIN_CHANNEL = 8;
 const static uint32_t PNUM_RELAY_CHANNEL = 8;
+const static uint32_t PNUM_7WHEEL_CHANNEL= 10;
 // Pneumatics Modules
 const static uint8_t  PNUM_DIGIN_MODULE  = 1;
 const static uint8_t  PNUM_RELAY_MODULE  = 1;
-
+const static uint8_t  PNUM_7WHEEL_MODULE = 1;
 // Shifter
 const static uint32_t SHIFT_FCHAN = 7;
 const static uint32_t SHIFT_RCHAN = 8;
@@ -33,6 +34,10 @@ const static uint32_t SHOOT_TALON_CHANNEL = 5;
 const static uint8_t  SHOOT_SLNOID_MODULE = 1; // clamp
 const static uint32_t SHOOT_SLNOID_FCHAN  = 5;
 const static uint32_t SHOOT_SLNOID_RCHAN  = 6;
+
+const static uint8_t  SHOOT_7WHEEL_MODULE = 1; // 7th wheel
+const static uint32_t SHOOT_7WHEEL_FCHAN  = 8;
+const static uint32_t SHOOT_7WHEEL_RCHAN  = 9;
 
 const static uint32_t WORM_JAG_CAN        = 2; // worm drive
 

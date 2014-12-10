@@ -35,7 +35,11 @@ public:
     void TestPeriodic();
     SmoothJoystick* driverJoy;
     SmoothJoystick* gunnerJoy;
+
     Pneumatics* pnum;
+    Pneumatics* pnum_7Wheel;
+    DoubleSolenoid* solenoid_7Wheel;
+
     Shifter* shift;
     DriveTrain* drive;
     Shooter* shoot;
