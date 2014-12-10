@@ -37,7 +37,7 @@ public:
     SmoothJoystick* gunnerJoy;
 
     Pneumatics* pnum;
-    Pneumatics* pnum_7wheel;
+    Pneumatics* pnum_7Wheel;
     DoubleSolenoid* solenoid_7Wheel;
 
     Shifter* shift;

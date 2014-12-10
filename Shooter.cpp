@@ -17,15 +17,15 @@ Shooter::Shooter(main_robot* r,uint8_t axisCan,
                  uint8_t wormCan,
                  uint8_t punchMod,uint32_t punchFChan,uint32_t punchRChan,
                  uint8_t bobMod,
-				 Pneumatics* pnum_7Wheel, DoubleSolenoid* solenoid_7Wheel)
+				 Pneumatics* pnum7Wheel, DoubleSolenoid* solenoid7Wheel)
                  :isPickingUp(false),isPitchingUp(false),
                  isPitchingDown(false),wormIsPulling(false),winching(false),
                  hasTilted(false),isPickingUpStopping(false),autoPulling(false),
                  smartFiring(false),accelWorking(true),smartFireTimer(new Timer())
 {
     robot = r;
-	this.pnum_7Wheel = pnum_7Wheel;
-	this.solenoid_7Wheel = solenoid_7Wheel;
+    pnum_7Wheel = pnum7Wheel;
+	solenoid_7Wheel = solenoid7Wheel;
     axis = new CANJaguar(axisCan);
     attractor = new Talon(attractMod, attractChan);
     clamper = new DoubleSolenoid(clampMod, clampFChan, clampRChan);
@@ -34,8 +34,8 @@ Shooter::Shooter(main_robot* r,uint8_t axisCan,
     bobTheAccelerometer = new ADXL345_I2C_612(bobMod);
 //  bobThePot = new AnalogChannel(1,5);
     isPickingUp = false;
-    7WheelExtend = false;
-    7WheelOldState = false;
+    //7WheelExtend = false;
+    //7WheelOldState = false;
     shooterJoy = robot -> gunnerJoy;
     shooterJoy -> addJoyFunctions(&buttonHelper,(void*)this,CLAMP);
     shooterJoy -> addJoyFunctions(&buttonHelper,(void*)this,ENERGIZE);
@@ -159,9 +159,9 @@ void Shooter::clampUp()
     clamp = up;
 }
 
-void Shooter::7WheelUpdate() 
+void Shooter::auto7Wheel() 
 {
-	if(!(ShooterJoy -> GetSmoothButton(CLAMP))
+	/*if(!(ShooterJoy -> GetSmoothButton(CLAMP))
 	{
 	    7WheelOldState = false;
 	}
@@ -180,7 +180,26 @@ void Shooter::7WheelUpdate()
 	else
 	{
 	    pnum_7Wheel->setVectorValues(TIME, solenoid_7Wheel, DoubleSolenoid::kReverse);
-	}
+	}*/
+	if(sevenWheel == up)
+	{
+        sevenWheelDown();
+    }
+    else
+    {
+        sevenWheelUp();
+    }
+}
+void Shooter::sevenWheelDown()
+{
+    robot -> pnum->setVectorValues(TIME, solenoid_7Wheel, DoubleSolenoid::kForward);
+    sevenWheel = down;
+}
+
+void Shooter::sevenWheelUp()
+{
+    robot -> pnum->setVectorValues(TIME, solenoid_7Wheel, DoubleSolenoid::kReverse);
+    sevenWheel = up;
 }
 
 void Shooter::wormStop()
@@ -235,6 +254,8 @@ void Shooter::buttonHelper(void* objPtr, uint32_t button)
     if(button==CLAMP)
     {
         shooterObj->autoClamp();
+        shooterObj->auto7Wheel();//Not actually sure what button this should go on. Feel free to move this method
+        // if you arent happy. I dont think the clamp actually does anthing, however, so it should be fine.
     }
     if(button==ENERGIZE)
     {
@@ -398,7 +419,6 @@ void Shooter::update()
         if (wormDone()) //checks if loader has reached farthest position
             wormStop();
     }
-    7WheelUpdate();
 }
 
 void Shooter::updateHelper(void* instName)

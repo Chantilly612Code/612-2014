@@ -24,13 +24,18 @@ public:
             uint8_t wormCan,
             uint8_t punchMod,uint32_t punchFChan,uint32_t punchRChan,
             uint8_t bobMod,
-			Pneumatics* pnum_7Wheel);
+			Pneumatics* pnum_7Wheel, DoubleSolenoid* solenoid_7Wheel);
     ~Shooter();
     enum Clamp {down, up};
     Clamp clamp;
+    Clamp sevenWheel;
+    //enum SevenWheel {down, up};
+    //SevenWheel sevenWheel;
     Pneumatics* pnum_7Wheel;
     DoubleSolenoid* solenoid_7Wheel;
-    void 7WheelUpdate();
+    void auto7Wheel();
+    void sevenWheelUp();
+    void sevenWheelDown();
     void pitchUp();
     void pitchDown();
     void pitchStop();
@@ -67,8 +72,8 @@ public:
     bool isPitchingUp;
     bool isPitchingDown;
     bool wormIsPulling;
-    bool 7WheelExtend;
-    bool 7WheelOldState;
+    //bool 7WheelExtend;
+    //bool 7WheelOldState;
     bool winching;
     bool hasTilted;
     bool isPickingUpStopping;

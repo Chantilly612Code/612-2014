@@ -25,7 +25,7 @@ void main_robot::RobotInit()
     driverJoy = new SmoothJoystick(this, DRIVER_JOY_PORT);
     gunnerJoy = new SmoothJoystick(this, GUNNER_JOY_PORT);
     pnum = new Pneumatics(this, PNUM_DIGIN_MODULE, PNUM_DIGIN_CHANNEL, PNUM_RELAY_MODULE, PNUM_RELAY_CHANNEL);
-	pnum_7wheel = new Pneumatics(this, PNUM_7WHEEL_MODULE, PNUM_7WHEEL_CHANNEL, PNUM_7WHEEL_MODULE, PNUM_7WHEEL_CHANNEL);
+	pnum_7Wheel = new Pneumatics(this, PNUM_7WHEEL_MODULE, PNUM_7WHEEL_CHANNEL, PNUM_7WHEEL_MODULE, PNUM_7WHEEL_CHANNEL);
 	solenoid_7Wheel = new DoubleSolenoid(SHOOT_7WHEEL_MODULE, SHOOT_7WHEEL_FCHAN, SHOOT_7WHEEL_RCHAN);
     shift = new Shifter(this, SHIFT_MOD, SHIFT_FCHAN, SHIFT_RCHAN);
     shift->setHigh();
