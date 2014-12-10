@@ -71,6 +71,6 @@ const static uint32_t GYCHAN     = 1;
 const static int POT_SLOT      = 1; //The slot number for the potentiometer
 const static int POT_CHANNEL   = 1; //The Channel number for the potentiometer
 const static double POT_SCALE  = 1; //The scale of the potentiometer (whatever that means. NOTE: look up)
-const static double POT_OFFSET = 1; //The offset of the potentiometer (again, look this up)
+const static double POT_OFFSET = 0; //The offset of the potentiometer (again, look this up)
 
 #endif

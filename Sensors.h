@@ -2,6 +2,7 @@
 #define SENSORS_H
 
 #include <AnalogChannel.h>
+#include <AnalogPotentiometer.h>
 #include <Gyro.h>
 #include "ports.h"
 
@@ -11,14 +12,17 @@ public:
     AnalogChannel* ultrasonic;
     AnalogChannel* infraredShooter;
     AnalogChannel* infraredLoad;
-    static const double VPMINF = 7.38976; //volate per meter shooter
+    AnalogPotentiometer* anglePot;
+    static const double VPMINF = 7.38976; //voltage per meter shooter
     static const double VPIULTRA = 0.0097361;
     static const double ULTRA_YINT = 0.7008307562;
 
-    Sensors(class main_robot* robot,
+    Sensors(class main_robot* r,
             uint8_t usMod, uint32_t usChan, uint8_t isMod, uint32_t isChan,
             uint8_t ilMod, uint32_t ilChan,
-            uint8_t gyMod, uint32_t gyChan);
+            uint8_t gyMod, uint32_t gyChan,
+            int pot_slot, int pot_channel,
+	    double pot_scale, double pot_offset);
     ~Sensors();
 
     float getVoltsInfShooter();//Get volts from infered shooter
@@ -35,8 +39,10 @@ public:
     double getGyroRate();
     void gyroReset();
     void setGyroSens(float vpdps); //Set the Gyro Sensitivitutbgsvi sh
+    double grabPot();
+    double findPotAngle();
 
-//    static void updateHelper(void* instName);
+    //static void updateHelper(void* instName);
 
     static const float LOAD_THRESHOLD = 10;
 };

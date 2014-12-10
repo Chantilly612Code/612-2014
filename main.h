@@ -47,8 +47,7 @@ public:
     
     vision* engine;
     void init_vision();
-    void stop_vision();
-    
+    void stop_vision();    
 };
 
 

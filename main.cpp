@@ -37,7 +37,7 @@ void main_robot::RobotInit()
                         WORM_JAG_CAN,
                         PUNCH_SLNOID_MODULE, PUNCH_SLNOID_FCHAN, PUNCH_SLNOID_RCHAN,
                         SHOOT_ACCEL_MODULE);
-    sensors = new Sensors(this, USMODNUMBER, USCHANNEL, ISMODNUMBER, ISCHANNEL, ILMODNUMBER, ILCHANNEL, GYMOD, GYCHAN);
+    sensors = new Sensors(this, USMODNUMBER, USCHANNEL, ISMODNUMBER, ISCHANNEL, ILMODNUMBER, ILCHANNEL, GYMOD, GYCHAN, POT_SLOT, POT_CHANNEL, POT_SCALE, POT_OFFSET);
     sensors->setGyroSens(1.0f); //default sensitivity
     printf("Welcome to 612-2014 AERIAL ASSIST\n");
 //    netcom = new Netcom();
@@ -166,8 +166,13 @@ void main_robot::TestPeriodic()
 //    printf("%d", engine->getHotGoal());
 //    pnum->checkPressure();
 //    pnum->updateSolenoid();
-    if(gunnerJoy->GetRawButton() == 3)
-      
+    //if(gunnerJoy->GetRawButton() == 3) COME BACK TO THIS CODE!!!!
+   static int output = 0;
+   if(output%20 == 0)
+   {
+       sensors->findPotAngle();
+   }
+   output++;     
 }
 
 void main_robot::init_vision() {

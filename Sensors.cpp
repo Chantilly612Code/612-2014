@@ -9,13 +9,16 @@
 Sensors::Sensors(main_robot* r,
                  uint8_t usMod, uint32_t usChan, uint8_t isMod, uint32_t isChan,
                  uint8_t ilMod, uint32_t ilChan,
-                 uint8_t gyMod, uint32_t gyChan)
+                 uint8_t gyMod, uint32_t gyChan,
+		 int pot_slot, int pot_channel,
+		 double pot_scale, double pot_offset)
 {
     robot = r;
 
     ultrasonic = new AnalogChannel(usMod, usChan);
     infraredShooter = new AnalogChannel(isMod, isChan);
     infraredLoad = new AnalogChannel(ilMod, ilChan);
+    anglePot = new AnalogPotentiometer(pot_slot, pot_channel, pot_scale, pot_offset);
     //gyro612 = new Gyro(GYMOD, GYCHAN);
 
 //    robot -> update -> addFunctions(&updateHelper, (void*)this);
@@ -93,4 +96,16 @@ void Sensors::gyroReset()
 void Sensors::setGyroSens(float vpdps /*Volts Per Degree Per Second*/)
 {
     //gyro612->SetSensitivity(vpdps);
+}
+
+double Sensors::grabPot()
+{
+    return anglePot->Get();
+}
+
+double Sensors::findPotAngle() //Just prints Pot Value for now
+{
+    double tempWeed = anglePot->Get();
+    printf("Current weed strength: %f \n", tempWeed);
+    return tempWeed;
 }
