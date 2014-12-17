@@ -3,6 +3,7 @@
 #include "DriveTrain.h"
 #include "Shooter.h"
 #include <Timer.h>
+#include <fstream>
 
 // the auto methods return true when completed
 
@@ -22,7 +23,9 @@ public:
     bool timePassed(float time);        //time measured in seconds
     Timer* timer;
     Timer* shotTimer;
-    enum State {COARSE_AIM, FINE_AIM_WAIT, FINE_AIM, IS_HOT, SMART_FIRE, BASIC_DRIVE, IDLE, DONE};
+    enum State {COARSE_AIM, FINE_AIM_WAIT, FINE_AIM, IS_HOT, SMART_FIRE, BASIC_DRIVE, IDLE, DRIVE_AIM_WINCH, DONE};
+    ofstream log;
+    Shooter* autoShooter;
     State stage;
     State previousStage;
     main_robot* robot;
@@ -30,8 +33,8 @@ public:
 
     void updateHighGoal();
     void updateBasicDrive();
-    
     bool getHot();
+    void testDataLoging();
 
     static const double DISTANCE = 151;
     static const double DEGREES_TURN = 25;

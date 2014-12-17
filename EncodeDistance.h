@@ -16,6 +16,8 @@ public:
     double getAvgDistance();
     double convertTickToDist(double pulse);
     double convertDistToTick(double distance);
+	double numOfRPulses();
+	double numOfLPulses();
     Encoder* EncoderL;
     Encoder* EncoderR;
 private:
@@ -24,6 +26,3 @@ private:
 };
 
 #endif // ENCODEDISTANCE_H
-
-
-

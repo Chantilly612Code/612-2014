@@ -37,7 +37,7 @@ void main_robot::RobotInit()
                         WORM_JAG_CAN,
                         PUNCH_SLNOID_MODULE, PUNCH_SLNOID_FCHAN, PUNCH_SLNOID_RCHAN,
                         SHOOT_ACCEL_MODULE);
-    sensors = new Sensors(this, USMODNUMBER, USCHANNEL, ISMODNUMBER, ISCHANNEL, ILMODNUMBER, ILCHANNEL, GYMOD, GYCHAN);
+    sensors = new Sensors(this, USMODNUMBER, USCHANNEL, ISMODNUMBER, ISCHANNEL, ILMODNUMBER, ILCHANNEL, GYMOD, GYCHAN, POT_SLOT, POT_CHANNEL, POT_SCALE, POT_OFFSET);
     sensors->setGyroSens(1.0f); //default sensitivity
     printf("Welcome to 612-2014 AERIAL ASSIST\n");
 //    netcom = new Netcom();
@@ -60,7 +60,8 @@ void main_robot::AutonomousInit()
     shoot->pitchStop();
     shoot->rollerStop();
     shoot->wormStop();
-    shift->setHigh();
+    shift->setLow();
+    autoBot->testDataLoging();
 }
 void main_robot::TestInit()
 {
@@ -92,39 +93,39 @@ void main_robot::TeleopPeriodic()
         prevLeft = 0.0f;
         loopLeft = 0;
     }
-    
+
     if (loopLeft > 0)
     {
         --loopLeft;
         rawleft = prevLeft;
     }
-    
+
     if (fabs(rawleft - prevLeft) > GLIDE_THRESHOLD)
     {
         rawleft = prevLeft + GLIDE_INCREMENT;
         loopLeft = GLIDE_ITERATIONS;
     }
-    
+
     prevLeft = rawleft;
-    
+
     if (fabs(rawright) < SmoothJoystick::DEADZONE)
     {
         prevRight = 0.0f;
         loopRight = 0;
     }
-    
+
     if (loopRight > 0)
     {
         --loopRight;
         rawright = prevRight;
     }
-    
+
     if (fabs(rawright - prevRight) > GLIDE_THRESHOLD)
     {
         rawright = prevRight + GLIDE_INCREMENT;
         loopRight = GLIDE_ITERATIONS;
     }
-    
+
     prevRight = rawRight;*/
 }
 
@@ -157,14 +158,21 @@ void main_robot::DisabledPeriodic()
 }
 void main_robot::TestPeriodic()
 {
-    static int output=0;
+    /*static int output=0;
     if(output%20==0) {
         printf("Supposed to wait: %i\n",autoBot->table->GetBoolean("1/WeWait",false));
     }
-    output++;
+    output++;*/
 //    printf("%d", engine->getHotGoal());
 //    pnum->checkPressure();
 //    pnum->updateSolenoid();
+    //if(gunnerJoy->GetRawButton() == 3) COME BACK TO THIS CODE!!!!
+   static int output = 0;
+   if(output%20 == 0)
+   {
+       sensors->findPotAngle();
+   }
+   output++;     
 }
 
 void main_robot::init_vision() {
@@ -182,5 +190,14 @@ void main_robot::stop_vision() {
         engine=NULL;
     }*/
 }
+
+/*void main_robot::StopAll()
+{
+    drive->stopAuto();
+    shift->setLow();
+    shoot->pitchStop();
+    shoot->rollerStop();
+    shoot->wormStop();
+}*/
 
 START_ROBOT_CLASS(main_robot)

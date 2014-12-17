@@ -37,7 +37,8 @@ public:
     double originUltraDist;
     float speedL;
     float speedR;
-    static const double SPEED;
+    static double SPEEDL;
+    static double SPEEDR;
     static const double PI = 3.14159265;
     static const double ROBOTRAD = 3.0;
     static const double CIRCUMROBOT;

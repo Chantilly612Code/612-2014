@@ -45,5 +45,12 @@ double EncodeDistance::convertDistToTick(double distance)
     return (distance/DISTPERPULSE_L);
 }
 
+double EncodeDistance::numOfRPulses()
+{
+	return EncoderR->GetRate();
+}
 
-
+double EncodeDistance::numOfLPulses()
+{
+	return EncoderL->GetRate();
+}

@@ -33,6 +33,7 @@ public:
     void AutonomousPeriodic();
     void DisabledPeriodic();
     void TestPeriodic();
+    //void StopAll();
     SmoothJoystick* driverJoy;
     SmoothJoystick* gunnerJoy;
     Pneumatics* pnum;
@@ -46,8 +47,7 @@ public:
     
     vision* engine;
     void init_vision();
-    void stop_vision();
-    
+    void stop_vision();    
 };
 
 
